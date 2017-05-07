@@ -1,0 +1,18 @@
+{
+  "autoPin": true,
+  "pins": [
+    {
+      "package": "ConvenientRestKit",
+      "reason": null,
+      "repositoryURL": "https://github.com/avriy/ConvenientRestKit",
+      "version": "1.0.0"
+    },
+    {
+      "package": "SwiftyJSON",
+      "reason": null,
+      "repositoryURL": "https://github.com/SwiftyJSON/SwiftyJSON.git",
+      "version": "3.1.4"
+    }
+  ],
+  "version": 1
+}
