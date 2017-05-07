@@ -19,7 +19,7 @@ extension XCTestCase {
 
 class RepositoryServiceTests: XCTestCase {
     
-    let github = GitHub(authorization: .basic(GitHub.Credentials(userName: "avriy", password: "Npn-1PA-4d9-7bR")))
+    let github = GitHub(authorization: .basic(GitHub.Credentials(userName: "", password: "")))
     
     func performTest<RequstConfiguration: RequestConfigurationProtocol>(configuration: RequstConfiguration, name: String, condition: @escaping (RequstConfiguration.ResultType) -> Bool = { _ in return true }) {
         let exp = expectation(description: name)
