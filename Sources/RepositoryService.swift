@@ -1,17 +1,17 @@
 import Foundation
 
-protocol RepositoryProtocol {
+public protocol RepositoryProtocol {
     var name: String { get }
     var url: URL { get }
 }
 
 /// Minimum information needed to create a repository
-struct RepositoryPrototype {
+public struct RepositoryPrototype {
     let name: String
     let description: String?
 }
 
-protocol RepositoryServiceProtocol {
+public protocol RepositoryServiceProtocol {
     associatedtype RepositoryType: RepositoryProtocol
     
     func createRepository(repository: RepositoryPrototype, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (RepositoryType) -> Void)

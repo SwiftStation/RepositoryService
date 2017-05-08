@@ -2,18 +2,22 @@ import Foundation
 import ConvenientRestKit
 import SwiftyJSON
 
-struct GitHub {
+public struct GitHub {
     
-    struct Credentials {
+    public struct Credentials {
         let userName: String
         let password: String
+        
+        public init(userName: String, password: String) {
+            self.userName = userName; self.password = password
+        }
         
         var urlCredential: URLCredential {
             return URLCredential(user: userName, password: password, persistence: .synchronizable)
         }
     }
     
-    enum Authorization {
+    public enum Authorization {
         case basic(Credentials)
         case token(String)
         
@@ -34,10 +38,10 @@ struct GitHub {
         }
     }
     
-    struct Repository: RepositoryProtocol {
+    public struct Repository: RepositoryProtocol {
         let id: Int
-        let name: String
-        let url: URL
+        public let name: String
+        public let url: URL
         let description: String?
     }
     
@@ -49,7 +53,7 @@ struct GitHub {
     private let sessionDelegate: SessionDelegate
     fileprivate let session: URLSession
     
-    init(authorization: @escaping @autoclosure (Void) -> Authorization) {
+    public init(authorization: @escaping @autoclosure (Void) -> Authorization) {
         self.authorization = authorization
         self.sessionDelegate = SessionDelegate(authorization: authorization)
         
@@ -82,20 +86,20 @@ struct GitHub {
 
 extension GitHub: RepositoryServiceProtocol {
     
-    func readRepositories(errorHandler: @escaping (Error) -> Void, successHandler: @escaping ([Repository]) -> Void) {
+    public func readRepositories(errorHandler: @escaping (Error) -> Void, successHandler: @escaping ([Repository]) -> Void) {
         ListRepositories(service: self).performTask(errorHandler: errorHandler, successHandler: successHandler)
     }
     
-    func createRepository(repository: RepositoryPrototype, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (Repository) -> Void) {
+    public func createRepository(repository: RepositoryPrototype, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (Repository) -> Void) {
         CreateRepository(service: self, name: repository.name, description: repository.description)
             .performTask(errorHandler: errorHandler, successHandler: successHandler)
     }
     
-    func updateRepository(repository: GitHub.Repository, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (Void) -> Void) {
+    public func updateRepository(repository: GitHub.Repository, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (Void) -> Void) {
         
     }
     
-    func deleteRepository(repository: GitHub.Repository, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (Void) -> Void) {
+    public func deleteRepository(repository: GitHub.Repository, errorHandler: @escaping (Error) -> Void, successHandler: @escaping (Void) -> Void) {
         DeleteRepository(service: self, userName: "avriy", repository: repository)
             .performTask(errorHandler: errorHandler, successHandler: successHandler)
     }
@@ -141,7 +145,7 @@ extension GitHub.Repository: JSONInitializable {
         case id, name, description, url
     }
     
-    init(json: JSON) throws {
+    public init(json: JSON) throws {
         self.id = try json.intValue(forKey: CodingKeys.id)
         self.name = try json.stringValue(forKey: CodingKeys.name)
         self.url = try json.value(forKey: CodingKeys.url, jsonModifier: {
